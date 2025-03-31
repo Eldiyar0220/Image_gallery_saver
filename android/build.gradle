@@ -2,54 +2,43 @@ group 'com.example.imagegallerysaver'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.8.0'  // Use the latest stable version of Kotlin
+    ext.kotlin_version = "1.8.0"
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        // Gradle Plugin version compatible with Kotlin 1.8.0
-        classpath 'com.android.tools.build:gradle:7.3.0'  // Update to the latest version compatible with Kotlin
+        classpath 'com.android.tools.build:gradle:7.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
 rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
     }
 }
-apply plugin: 'com.android.library'  // For Android library module
-apply plugin: 'kotlin-android'  // Apply Kotlin plugin
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 34
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 30
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     lintOptions {
-        disable 'InvalidPackage'  // Disable 'InvalidPackage' lint warning
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'  // Ensure Kotlin source directory is set
+        disable 'InvalidPackage'
     }
 }
 
 dependencies {
-    // Ensure you're using the correct Kotlin version
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"  // Match the Kotlin version defined in the project-level build.gradle
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
